@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build libgl-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libxkbcommon-dev
+
+      - name: Configure
+        # GCC / Clang 上视警告为错误；MSVC 的 /W4 警告集合不同，只报告不阻断
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DKINEMA_WARNINGS_AS_ERRORS=${{ runner.os == 'Windows' && 'OFF' || 'ON' }}
+
+      - name: Build
+        run: cmake --build build --config Release --parallel
+
+      - name: Test
+        run: ctest --test-dir build -C Release --output-on-failure
+
+      - name: Benchmark
+        shell: bash
+        run: |
+          if [ -f build/bin/Release/kinema_bench.exe ]; then build/bin/Release/kinema_bench.exe --steps 200
+          else build/bin/kinema_bench --steps 200; fi

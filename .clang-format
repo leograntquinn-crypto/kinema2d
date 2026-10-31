@@ -1,0 +1,10 @@
+# 代码风格：Google 风格 + 4 空格缩进 + 120 列
+BasedOnStyle: Google
+IndentWidth: 4
+ColumnLimit: 120
+AccessModifierOffset: -4
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: WithoutElse
+DerivePointerAlignment: false
+PointerAlignment: Left
+IncludeBlocks: Preserve

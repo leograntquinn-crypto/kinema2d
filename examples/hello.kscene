@@ -1,0 +1,20 @@
+# Kinema2D scene file —— 手写的示例场景
+# 每行一条记录：类型 key=value key=value ...（未写的字段使用默认值）
+# 在客户端中：File -> Open Scene...，输入 examples/hello.kscene
+
+kinema_scene version=1
+world gx=0 gy=-9.81 iterations=10 warm=1 sleep=1
+
+# 地面（静态多边形，顶点相对于 x,y）
+body id=1 type=static x=0 y=-0.5 shape=polygon verts=-15,-0.5;15,-0.5;15,0.5;-15,0.5 user=13b4252ff
+
+# 一个悬挂点 + 用旋转关节吊着的摆锤
+body id=2 type=static x=0 y=10 shape=circle radius=0.2 user=18892a6ff
+body id=3 type=dynamic x=4 y=10 density=2 shape=circle radius=0.6 user=1ff6b6bff
+joint type=distance a=2 b=3 ax=0 ay=0 bx=0 by=0 length=4
+
+# 三个三角形和一个弹力球
+body id=4 type=dynamic x=-3 y=2 angle=0.3 shape=polygon verts=-0.6,-0.5;0.6,-0.5;0,0.6 user=1ffd166ff
+body id=5 type=dynamic x=-1 y=4 angle=1.2 shape=polygon verts=-0.6,-0.5;0.6,-0.5;0,0.6 user=106d6a0ff
+body id=6 type=dynamic x=1 y=6 shape=polygon verts=-0.6,-0.5;0.6,-0.5;0,0.6 user=1a78bfaff
+body id=7 type=dynamic x=-6 y=8 restitution=0.9 shape=circle radius=0.4 user=14f8cffff

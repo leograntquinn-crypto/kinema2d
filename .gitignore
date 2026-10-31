@@ -1,0 +1,23 @@
+# 构建输出
+build/
+build-*/
+out/
+cmake-build-*/
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.user
+CMakeUserPresets.json
+
+# 运行时生成的文件
+kinema2d_layout.ini
+imgui.ini
+screenshot_*.png
+*.kscene
+!examples/*.kscene
+
+# 系统文件
+.DS_Store
+Thumbs.db
